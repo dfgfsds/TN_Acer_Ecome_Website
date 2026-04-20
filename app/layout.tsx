@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Acer Computer Store",
 };
 
+import Providers from "./components/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,10 +32,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
 
-      <body className="min-h-full flex flex-col">
-        <Header />
-        {children}
-        {/* <Footer /> */}
+      <body className="min-h-full flex flex-col bg-black">
+        <Providers>
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

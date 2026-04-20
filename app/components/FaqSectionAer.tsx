@@ -46,7 +46,7 @@ export default function FaqSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-3xl md:text-5xl text-white font-bold text-transparent text-center"
+                    className="text-3xl md:text-5xl text-white font-bold text-center"
                 >
                     Frequently Asked Questions
                 </motion.h2>
