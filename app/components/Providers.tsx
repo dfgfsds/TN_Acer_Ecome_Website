@@ -29,7 +29,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           </ProductsProvider>
         </VendorProvider>
       </UserProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

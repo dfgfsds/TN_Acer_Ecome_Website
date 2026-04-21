@@ -2,21 +2,21 @@
 
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/context/UserContext';
-import { 
-  getAddressApi, 
-  postAddressCreateApi, 
-  updateAddressApi, 
-  deleteAddressApi 
+import {
+  getAddressApi,
+  postAddressCreateApi,
+  updateAddressApi,
+  deleteAddressApi
 } from '@/api-endpoints/authendication';
-import { 
-  Plus, 
-  MapPin, 
-  Edit2, 
-  Trash2, 
-  CheckCircle2, 
-  Loader2, 
-  Home, 
-  Briefcase, 
+import {
+  Plus,
+  MapPin,
+  Edit2,
+  Trash2,
+  CheckCircle2,
+  Loader2,
+  Home,
+  Briefcase,
   Navigation,
   ChevronLeft,
   Star
@@ -69,12 +69,12 @@ export default function AddressesPage() {
       // Correct endpoint for addresses by user
       const response = await getAddressApi(`user/${user.id}/`);
       const data = Array.isArray(response.data) ? response.data : [];
-      
+
       // Map backend fields to the UI interface
       const mappedData = data.map((item: any) => {
         const addrLine1 = item.address_line1 || '';
         const parts = addrLine1.split(',').map((p: string) => p.trim());
-        
+
         return {
           ...item,
           name: item.customer_name || item.full_name || item.name || '',
@@ -87,7 +87,7 @@ export default function AddressesPage() {
           is_primary: item.is_primary || false
         };
       });
-      
+
       setAddresses(mappedData);
     } catch (err) {
       console.error('Fetch Address Error:', err);
@@ -121,7 +121,7 @@ export default function AddressesPage() {
     if (!window.confirm('Are you sure you want to delete this address?')) return;
     try {
       // Backend requires deleted_by and often vendor for auditing
-      await deleteAddressApi(`${id}/`, { 
+      await deleteAddressApi(`${id}/`, {
         deleted_by: user.id,
         vendor: 159,
         vendor_id: 159
@@ -141,11 +141,11 @@ export default function AddressesPage() {
       // Delete all current addresses and recreate with updated is_primary flags
       // Note: Backend PATCH is broken, using delete+create workaround
       const savedAddresses = [...addresses];
-      
+
       for (const a of savedAddresses) {
         await deleteAddressApi(`${a.id}/`, { deleted_by: user.id, vendor: 159, vendor_id: 159 });
       }
-      
+
       for (const a of savedAddresses) {
         const addrLine1 = a.house_no + (a.area ? `, ${a.area}` : '');
         await postAddressCreateApi('', {
@@ -166,7 +166,7 @@ export default function AddressesPage() {
           vendor: 159
         });
       }
-      
+
       setSuccessMsg('Default address updated!');
       setTimeout(() => setSuccessMsg(''), 3000);
       fetchAddresses();
@@ -207,7 +207,7 @@ export default function AddressesPage() {
         await postAddressCreateApi('', payload);
         setSuccessMsg('Address added successfully.');
       }
-      
+
       fetchAddresses();
       setView('list');
       resetForm();
@@ -244,11 +244,11 @@ export default function AddressesPage() {
   return (
     <div className="w-full min-h-[500px] flex flex-col">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-black text-[#80a22c] tracking-wide uppercase italic">
-          {view === 'list' ? 'Saved Locations' : editingAddress ? 'Update Logistics' : 'New Tactical Zone'}
+        <h1 className="text-2xl font-black text-[#80a22c] tracking-wide ">
+          {view === 'list' ? 'Your Addresses' : editingAddress ? 'Update Logistics' : 'New Tactical Zone'}
         </h1>
         {view === 'list' && (
-          <button 
+          <button
             onClick={openAddForm}
             className="flex items-center gap-2 bg-[#80a22c] text-black px-4 py-2 rounded-lg font-black text-xs tracking-widest hover:bg-[#90b23c] transition-all"
           >
@@ -267,7 +267,7 @@ export default function AddressesPage() {
 
       <AnimatePresence mode="wait">
         {view === 'list' ? (
-          <motion.div 
+          <motion.div
             key="list"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -283,7 +283,7 @@ export default function AddressesPage() {
               <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-white/5 rounded-3xl">
                 <Navigation className="w-12 h-12 text-gray-700 mb-4" />
                 <p className="text-gray-500 font-bold tracking-widest uppercase text-sm mb-6">No saved drop zones found.</p>
-                <button 
+                <button
                   onClick={openAddForm}
                   className="bg-white/5 border border-white/10 text-white px-8 py-3 rounded-full font-black text-xs tracking-widest hover:bg-white/10 transition-all"
                 >
@@ -294,7 +294,7 @@ export default function AddressesPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {addresses.map((addr) => (
                   <div key={addr.id} className={`relative group overflow-hidden rounded-2xl p-6 border transition-all ${addr.is_primary ? 'bg-[#80a22c]/5 border-[#80a22c]/40' : 'bg-[#1a1d24] border-white/5 hover:border-white/10'}`}>
-                    
+
                     {/* Edit / Delete - show on hover */}
                     <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button onClick={() => handleEdit(addr)} className="p-1.5 bg-white/5 hover:bg-[#80a22c]/20 hover:text-[#80a22c] rounded-lg transition-colors">
@@ -345,7 +345,7 @@ export default function AddressesPage() {
             )}
           </motion.div>
         ) : (
-          <motion.form 
+          <motion.form
             key="form"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -353,7 +353,7 @@ export default function AddressesPage() {
             onSubmit={handleFormSubmit}
             className="space-y-6 max-w-4xl"
           >
-            <button 
+            <button
               type="button"
               onClick={() => setView('list')}
               className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-xs font-black tracking-widest uppercase mb-8"
@@ -375,22 +375,22 @@ export default function AddressesPage() {
                 <div className="space-y-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Full Name</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                       placeholder="Receiver Name"
                     />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Mobile Number</label>
-                    <input 
-                      type="tel" 
+                    <input
+                      type="tel"
                       required
                       value={formData.mobile}
-                      onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                       className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                       placeholder="10-digit mobile"
                     />
@@ -402,7 +402,7 @@ export default function AddressesPage() {
                         <button
                           key={type}
                           type="button"
-                          onClick={() => setFormData({...formData, address_type: type})}
+                          onClick={() => setFormData({ ...formData, address_type: type })}
                           className={`flex-1 py-3 rounded-xl border text-xs font-black tracking-widest uppercase transition-all ${formData.address_type === type ? 'border-[#80a22c] bg-[#80a22c]/5 text-[#80a22c]' : 'border-white/5 text-gray-500 hover:text-white'}`}
                         >
                           {type}
@@ -419,53 +419,53 @@ export default function AddressesPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Pincode</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={formData.pincode}
-                      onChange={(e) => setFormData({...formData, pincode: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
                       className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                       placeholder="6 digits"
                     />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">State</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       required
                       value={formData.state}
-                      onChange={(e) => setFormData({...formData, state: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                       className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                     />
                   </div>
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">City</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     value={formData.city}
-                    onChange={(e) => setFormData({...formData, city: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">House / Building / Street</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     value={formData.house_no}
-                    onChange={(e) => setFormData({...formData, house_no: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, house_no: e.target.value })}
                     className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Area / Colony</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     value={formData.area}
-                    onChange={(e) => setFormData({...formData, area: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, area: e.target.value })}
                     className="w-full bg-[#1a1d24] border border-white/5 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all text-sm"
                   />
                 </div>
@@ -473,8 +473,8 @@ export default function AddressesPage() {
             </div>
 
             <div className="pt-8 border-t border-white/5">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isSubmitting}
                 className="group relative bg-[#80a22c] text-black font-black uppercase text-xs tracking-[0.2em] px-12 py-4 flex items-center justify-center gap-2 hover:bg-[#90b23c] transition-all disabled:opacity-50 min-w-[220px]"
                 style={{ clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)' }}

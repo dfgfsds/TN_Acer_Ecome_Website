@@ -5,7 +5,7 @@ import { useCartItem } from '@/context/CartItemContext';
 import { useProducts } from '@/context/ProductsContext';
 import { useAuthRedirect } from '@/context/useAuthRedirect';
 import { useUser } from '@/context/UserContext';
-import { getAddressApi, patchUserSelectAddressAPi } from '@/api-endpoints/authendication';
+import { getAddressApi, getVendorDeliveryDetailsApi, patchUserSelectAddressAPi } from '@/api-endpoints/authendication';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Trash2,
@@ -27,6 +27,8 @@ import { useRouter } from 'next/navigation';
 import { useVendor } from '@/context/VendorContext';
 import { postPaymentApi, postCODPaymentApi, getDeliveryDetailsApi } from '@/api-endpoints/CartsApi';
 import Script from 'next/script';
+import axios from 'axios';
+import { baseUrl } from '@/api-endpoints/ApiUrls';
 
 export default function CartPage() {
   useAuthRedirect({ requireAuth: true, redirectTo: '/login' });
@@ -49,7 +51,7 @@ export default function CartPage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [showToast, setShowToast] = useState(false);
 
-  const RAZOR_PAY_KEY = 'rzp_live_RKNXWxLvWCeZr6';
+
 
   // Fetch primary address
   useEffect(() => {
@@ -76,16 +78,24 @@ export default function CartPage() {
       .finally(() => setAddressLoading(false));
   }, [user]);
 
+  const [siteDetails, setSiteDetails] = useState<any>('');
+
+  const fetchSite = async () => {
+    try {
+      const response: any = await getVendorDeliveryDetailsApi(vendorId || "159");
+      setSiteDetails(response?.data);
+    } catch (err) {
+      console.error('Fetch Site Details Error:', err);
+    }
+  };
+
+  const RAZOR_PAY_KEY = Array.isArray(siteDetails)
+    ? siteDetails[0]?.payment_gateway_client_id
+    : siteDetails?.payment_gateway_client_id || 'rzp_live_RKNXWxLvWCeZr6';
+
   // Fetch delivery charges
   useEffect(() => {
-    if (!vendorId) return;
-    getDeliveryDetailsApi(vendorId)
-      .then((res) => {
-        if (res.data?.[0]) {
-          setDeliveryCharge(parseFloat(res.data[0].own_delivery_charge) || 0);
-        }
-      })
-      .catch((err) => console.error("Error fetching delivery charge:", err));
+    fetchSite();
   }, [vendorId]);
 
   const handlePlaceOrder = async () => {
@@ -245,7 +255,7 @@ export default function CartPage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           <div className="space-y-1">
-            <h1 className="text-4xl font-black uppercase italic tracking-tighter">Your Arsenal</h1>
+            <h1 className="text-2xl md:text-3xl font-black ">Your Shopping Cart</h1>
 
           </div>
           <Link href="/products" className="flex items-center gap-2 text-[#80a22c] font-bold text-sm hover:translate-x-[-4px] transition-transform w-fit">

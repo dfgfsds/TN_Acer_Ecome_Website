@@ -29,9 +29,9 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
   ];
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-gray-300 font-sans pt-24 pb-12 selection:bg-[#80a22c] selection:text-black">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row gap-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#0b0c10] text-gray-300 font-sans pt-24 pb-12 selection:bg-[#80a22c] selection:text-black">
+      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row gap-8 justify-center">
 
           {/* SIDEBAR */}
           <aside className="w-full md:w-64 flex-shrink-0">

@@ -14,7 +14,7 @@ export default function LoginPage() {
   // Email state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   // Mobile state
   const [mobile, setMobile] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -51,12 +51,18 @@ export default function LoginPage() {
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
+      setError("Transmission failed: Mobile number must be exactly 10 digits.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
       const payload = { contact_number: mobile, vendor_id: 159 };
       const response = await postSendSmsOtpUserApi(payload);
-      
+
       if (response.data && response.data.success !== false) {
         setOtpToken(response.data.token);
         setOtpSent(true);
@@ -85,7 +91,7 @@ export default function LoginPage() {
         login(response.data);
         router.push("/products");
       } else {
-        if(response.data?.success === false) {
+        if (response.data?.success === false) {
           setError(response.data?.message || "Invalid Authorization Code.");
         } else {
           setError("Invalid Authorization Code.");
@@ -111,7 +117,7 @@ export default function LoginPage() {
       <main className="container mx-auto px-4 py-8 relative z-10 flex flex-col items-center justify-center min-h-screen">
         <div className="w-full max-w-md">
           {/* Back Button */}
-          <button 
+          <button
             onClick={() => router.back()}
             className="flex items-center gap-2 text-[#80a22c] font-bold text-sm hover:translate-x-[-4px] transition-transform mb-8"
           >
@@ -120,7 +126,7 @@ export default function LoginPage() {
           </button>
 
           {/* Login Container */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white/[0.03] border border-white/5 rounded-3xl p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden group"
@@ -128,13 +134,15 @@ export default function LoginPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-[#80a22c]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-black uppercase italic tracking-tighter mb-2">Identify Yourself</h1>
-              <p className="text-gray-500 text-sm font-bold tracking-widest uppercase">Enter your credentials to proceed</p>
+              <h1 className="text-3xl font-bold italic tracking-wide mb-2">
+                Sign in
+              </h1>
+              <p className="text-gray-500 text-base font-bold">Enter your credentials to proceed</p>
             </div>
 
             {/* Toggle Login Method */}
             <div className="flex bg-[#0a0a0f] rounded-xl p-1.5 mb-8 border border-white/5 shadow-inner">
-              <button 
+              <button
                 type="button"
                 className={`flex-1 py-3 text-xs font-black tracking-widest uppercase rounded-lg transition-all duration-300 ${loginMethod === 'mobile' ? 'bg-[#80a22c] text-black shadow-lg shadow-[#80a22c20]' : 'text-gray-500 hover:text-white'}`}
                 onClick={() => {
@@ -145,7 +153,7 @@ export default function LoginPage() {
               >
                 Mobile Login
               </button>
-              <button 
+              <button
                 type="button"
                 className={`flex-1 py-3 text-xs font-black tracking-widest uppercase rounded-lg transition-all duration-300 ${loginMethod === 'email' ? 'bg-[#80a22c] text-black shadow-lg shadow-[#80a22c20]' : 'text-gray-500 hover:text-white'}`}
                 onClick={() => {
@@ -160,35 +168,35 @@ export default function LoginPage() {
             <AnimatePresence mode="wait">
               {loginMethod === 'email' ? (
                 /* EMAIL LOGIN FORM */
-                <motion.form 
+                <motion.form
                   key="email-form"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  onSubmit={handleEmailLogin} 
+                  onSubmit={handleEmailLogin}
                   className="space-y-5"
                 >
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Transmission ID (Email)</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1"> Email</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         className="w-full bg-neutral-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all font-medium placeholder:text-gray-600"
-                        placeholder="agent@acer.com"
+                        placeholder="email.com"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Access Code (Password)</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Password</label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                      <input 
-                        type="password" 
+                      <input
+                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -199,7 +207,7 @@ export default function LoginPage() {
                   </div>
 
                   {error && (
-                    <motion.p 
+                    <motion.p
                       initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                       className="text-red-500 text-xs font-bold uppercase tracking-widest text-center mt-2 border border-red-500/20 bg-red-500/10 py-2 rounded-lg"
                     >
@@ -207,8 +215,8 @@ export default function LoginPage() {
                     </motion.p>
                   )}
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={isLoading}
                     className="w-full py-4 mt-6 bg-[#80a22c] text-black font-black uppercase text-sm tracking-[0.2em] rounded-xl shadow-xl shadow-[#80a22c20] hover:bg-[#90b23c] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
@@ -217,22 +225,25 @@ export default function LoginPage() {
                 </motion.form>
               ) : (
                 /* MOBILE LOGIN FORM */
-                <motion.form 
+                <motion.form
                   key="mobile-form"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  onSubmit={otpSent ? handleVerifyOtp : handleSendOtp} 
+                  onSubmit={otpSent ? handleVerifyOtp : handleSendOtp}
                   className="space-y-5"
                 >
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Comlink Number (Mobile)</label>
+                    <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Mobile</label>
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                      <input 
-                        type="tel" 
+                      <input
+                        type="tel"
                         value={mobile}
-                        onChange={(e) => setMobile(e.target.value)}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                          setMobile(val);
+                        }}
                         disabled={otpSent}
                         required
                         className="w-full bg-neutral-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all font-medium placeholder:text-gray-600 disabled:opacity-50"
@@ -242,20 +253,23 @@ export default function LoginPage() {
                   </div>
 
                   {otpSent && (
-                    <motion.div 
+                    <motion.div
                       className="space-y-1"
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                     >
-                      <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Authorization Code (OTP)</label>
+                      <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Enter OTP</label>
                       <div className="relative">
                         <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={otpInput}
-                          onChange={(e) => setOtpInput(e.target.value)}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+                            setOtpInput(val);
+                          }}
                           required
-                          className="w-full bg-neutral-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-[#80a22c] focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all font-bold tracking-[0.5em] text-center placeholder:text-gray-600 placeholder:tracking-widest"
+                          className="w-full bg-neutral-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-[#80a22c] focus:outline-none focus:border-[#80a22c]/50 focus:ring-1 focus:ring-[#80a22c]/50 transition-all font-bold tracking-[0.5em] text-left placeholder:text-gray-600 placeholder:tracking-widest"
                           placeholder="------"
                           maxLength={6}
                         />
@@ -264,7 +278,7 @@ export default function LoginPage() {
                   )}
 
                   {error && (
-                    <motion.p 
+                    <motion.p
                       initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                       className="text-red-500 text-xs font-bold uppercase tracking-widest text-center mt-2 border border-red-500/20 bg-red-500/10 py-2 rounded-lg"
                     >
@@ -272,14 +286,14 @@ export default function LoginPage() {
                     </motion.p>
                   )}
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={isLoading}
                     className="w-full py-4 mt-6 bg-[#80a22c] text-black font-black uppercase text-sm tracking-[0.2em] rounded-xl shadow-xl shadow-[#80a22c20] hover:bg-[#90b23c] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (otpSent ? 'Verify & Authorize' : 'Send Auth Code')}
                   </button>
-                  
+
                   {otpSent && (
                     <button
                       type="button"
@@ -295,9 +309,9 @@ export default function LoginPage() {
 
             <div className="mt-8 pt-6 border-t border-white/5 text-center">
               <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">
-                New Agent?{' '}
+                Don't have an account?{' '}
                 <Link href="/register" className="text-[#80a22c] hover:text-white transition-colors">
-                  Initialize Registration
+                  Create account
                 </Link>
               </p>
             </div>

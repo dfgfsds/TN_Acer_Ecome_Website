@@ -42,6 +42,7 @@ const codPay = `${baseUrl}/cod-pay-now/`;
 const sendSmsOtpUser = `${baseUrl}/send-sms-opt-user/`;
 const otpVerify = `${baseUrl}/verify-sms-opt-return-user/`;
 const vendorPaymentDeliveryDetails = `${baseUrl}/vendor-site-payment-delivery-partner-details/`;
+
 export default {
   cartCreate,
   createUsers,

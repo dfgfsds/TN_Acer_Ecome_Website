@@ -121,11 +121,11 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="group relative bg-[#80a22c] text-black font-black uppercase text-xs tracking-[0.15em] px-10 py-4 flex items-center justify-center gap-2 hover:bg-[#90b23c] transition-all disabled:opacity-50 min-w-[200px] shadow-[0_0_20px_rgba(128,162,44,0.2)]"
-            style={{ clipPath: 'polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)' }}
+            className="group relative bg-[#80a22c] rounded-lg text-black font-black text-xs tracking-[0.15em] px-10 py-4 flex items-center justify-center gap-2 hover:bg-[#90b23c] transition-all disabled:opacity-50 min-w-[200px] shadow-[0_0_20px_rgba(128,162,44,0.2)]"
+
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'SAVE CHANGES'}
-            
+
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </button>
         </div>

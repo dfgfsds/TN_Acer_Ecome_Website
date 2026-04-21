@@ -26,16 +26,16 @@ const ProductCard = ({ product }: { product: any }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9 }}
             whileHover={{ y: -10 }}
-            className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden "
+            className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden flex flex-col h-full"
         >
             {/* Image Container */}
-            <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-gray-900 to-black">
-                <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-colors duration-500"></div>
+            <div className="relative h-40 md:h-64 w-full overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+                <div className="absolute inset-0 bg-green-500/5 group-hover:bg-[#80a22c]/10 transition-colors duration-500"></div>
                 <Image
                     src={image}
                     alt={name}
                     fill
-                    className="object-contain w-full h-48 transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-110"
                 />
 
                 {/* Hover Overlay */}
@@ -50,29 +50,29 @@ const ProductCard = ({ product }: { product: any }) => {
             </div>
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-3 md:p-6 flex flex-col flex-grow">
                 <span className="text-[14px] font-bold text-[#80a22c] uppercase mb-1 block">
                     {product.brand_name || "ACER"}
                 </span>
-                <h3 className="text-xl font-bold truncate text-white line-clamp-2  leading-tight">
+                <h3 className="text-sm md:text-xl font-bold truncate text-white leading-tight">
                     {name}
                 </h3>
-                <p className="mt-2 text-gray-400 text-sm line-clamp-2 leading-relaxed">
+                <p className="mt-2 text-gray-400 text-sm line-clamp-2 leading-relaxed hidden md:block">
                     {description}
                 </p>
 
-                <div className="mt-6 flex items-center justify-between">
+                <div className="mt-auto pt-2 md:pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="flex flex-col">
-                        <span className="text-xs md:text-sm text-gray-500 uppercase font-bold tracking-tighter">Price</span>
-                        <span className="text-base font-semibold tracking-wide text-white">
+                        <span className="text-[10px] md:text-sm text-gray-500 uppercase font-black tracking-widest">Price</span>
+                        <span className="text-sm md:text-base font-black tracking-wide text-[#80a22c]">
                             {formattedPrice}
                         </span>
                     </div>
                     <Link href={`/products/${product.id}`}>
                         <motion.button
-                            whileHover={{ scale: 1.05, backgroundColor: "#80a22c", boxShadow: "0 0 20px rgba(73, 243, 141, 0.4)" }}
+                            whileHover={{ scale: 1.05, backgroundColor: "#80a22c", boxShadow: "0 0 20px rgba(128, 162, 44, 0.4)" }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-6 py-2 bg-[#80a22c] text-white text-sm md:text-base font-bold rounded-xl transition-colors shadow-lg shadow-green-500/20"
+                            className="w-full sm:w-auto px-4 md:px-6 py-2 bg-[#80a22c] text-black text-[10px] md:text-sm font-black uppercase tracking-widest rounded-lg transition-all"
                         >
                             View
                         </motion.button>
@@ -94,20 +94,21 @@ export default function ProductsPage() {
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-20 px-6">
             {/* Background Glow */}
-            <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-green-500/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+            <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-[#80a22c]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
             <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
                     <div>
-                        <motion.h1
+
+                        <motion.h1 className="text-3xl md:text-5xl mt-4 font-bold italic "
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="text-3xl md:text-5xl font-black"
                         >
-                            Acer Premium
+                            Acer Mall<span className="text-[#80a22c]">Products</span>
                         </motion.h1>
+
                         <motion.p
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -139,14 +140,14 @@ export default function ProductsPage() {
                 {/* Loading State */}
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center py-40 gap-4">
-                        <Loader2 className="w-12 h-12 text-green-500 animate-spin" />
+                        <Loader2 className="w-12 h-12 text-[#80a22c] animate-spin" />
                         <p className="text-gray-400 animate-pulse font-bold tracking-widest uppercase text-sm">Initializing Power...</p>
                     </div>
                 ) : (
                     <>
                         {/* Products Grid */}
                         <motion.div
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-8"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ staggerChildren: 0.1 }}

@@ -16,8 +16,8 @@ export default function OrdersPage() {
     setIsLoading(true);
     try {
       const response = await getOrdersAndOrdersItemsApi(`?user_id=${user.id}&vendor_id=159`);
-      const data = Array.isArray(response.data) ? response.data : 
-                  (response.data?.data && Array.isArray(response.data.data)) ? response.data.data : [];
+      const data = Array.isArray(response.data) ? response.data :
+        (response.data?.data && Array.isArray(response.data.data)) ? response.data.data : [];
       setOrders(data);
     } catch (err) {
       console.error('Fetch Orders Error:', err);
@@ -62,10 +62,10 @@ export default function OrdersPage() {
   return (
     <div className="w-full flex-grow flex flex-col min-h-[500px]">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-black text-[#80a22c] tracking-wide uppercase italic">
-          Order Arsenal
+        <h1 className="text-2xl font-black text-[#80a22c] tracking-wide uppercase">
+          Order History
         </h1>
-        <button 
+        <button
           onClick={fetchOrders}
           disabled={isLoading}
           className="p-2 border border-white/10 rounded-lg text-gray-500 hover:text-white hover:border-[#80a22c] hover:bg-[#80a22c]/10 transition-all disabled:opacity-50"
@@ -77,7 +77,7 @@ export default function OrdersPage() {
 
       <AnimatePresence mode="wait">
         {isLoading ? (
-          <motion.div 
+          <motion.div
             key="loading"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="flex flex-col items-center justify-center py-32 grayscale opacity-50"
@@ -86,7 +86,7 @@ export default function OrdersPage() {
             <p className="mt-4 text-xs font-bold tracking-[0.2em] uppercase">Scanning Transaction Logs...</p>
           </motion.div>
         ) : orders.length === 0 ? (
-          <motion.div 
+          <motion.div
             key="empty"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center py-24 border-2 border-dashed border-white/5 rounded-[40px] bg-white/[0.01]"
@@ -94,7 +94,7 @@ export default function OrdersPage() {
             <Box className="w-16 h-16 text-gray-700 mb-6" />
             <p className="text-gray-400 font-black tracking-widest uppercase text-base mb-2">No recent deployments</p>
             <p className="text-gray-600 font-medium text-sm max-w-sm text-center mb-8">Your hardware acquisition history is currently empty. Visit the shop to execute your first order.</p>
-            <a 
+            <a
               href="/products"
               className="bg-[#80a22c] text-black px-10 py-4 rounded-xl font-black text-xs tracking-[0.2em] uppercase hover:bg-[#90b23c] transition-all shadow-lg shadow-[#80a22c]/20"
               style={{ clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)' }}
@@ -103,7 +103,7 @@ export default function OrdersPage() {
             </a>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             key="list"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             className="space-y-6"
@@ -118,7 +118,7 @@ export default function OrdersPage() {
 
               return (
                 <div key={order.id || index} className="bg-[#1a1d24] border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
-                  
+
                   {/* Order Header */}
                   <div className="bg-white/[0.02] border-b border-white/5 p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex items-start gap-4">
@@ -178,7 +178,7 @@ export default function OrdersPage() {
                       </div>
                     )}
                   </div>
-                  
+
                   {/* Footer / Actions */}
                   <div className="bg-white/[0.01] border-t border-white/5 p-4 flex justify-between items-center px-5 md:px-6">
                     <p className="text-xs font-bold text-gray-500 tracking-wider">

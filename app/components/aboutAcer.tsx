@@ -57,7 +57,7 @@ export default function AboutAcer() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="text-3xl md:text-6xl font-black tracking-tight"
+                        className="text-3xl md:text-5xl font-black tracking-tight"
                     >
                         About Acer Store
                     </motion.h2>

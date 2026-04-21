@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import Providers from "./components/Providers";
+// import Script from "next/script";
 
 export default function RootLayout({
   children,
@@ -33,6 +34,10 @@ export default function RootLayout({
     >
 
       <body className="min-h-full flex flex-col bg-black">
+        {/* <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        /> */}
         <Providers>
           <Header />
           <main className="flex-grow">
