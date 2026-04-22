@@ -76,8 +76,10 @@ const Footer = () => {
                                 <motion.a
                                     key={index}
                                     href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     whileHover={{ y: -5, scale: 1.1 }}
-                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-green-500/20 hover:border-[#80a22c]/10 transition-all duration-300 text-gray-400 hover:text-green-500"
+                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#80a22c]/20 hover:border-[#80a22c]/10 transition-all duration-300 text-gray-400 hover:text-[#80a22c]"
                                     aria-label={social.name}
                                 >
                                     {social.icon}
@@ -94,7 +96,7 @@ const Footer = () => {
                                 <li key={index}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-400 hover:text-green-500 text-sm flex items-center gap-2 transition-colors group"
+                                        className="text-gray-400 hover:text-[#80a22c] text-sm flex items-center gap-2 transition-colors group"
                                     >
                                         <ChevronRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                                         {link.name}
@@ -112,7 +114,7 @@ const Footer = () => {
                                 <li key={index}>
                                     <Link
                                         href={link.href}
-                                        className="text-gray-400 hover:text-green-500 text-sm flex items-center gap-2 transition-colors group"
+                                        className="text-gray-400 hover:text-[#80a22c] text-sm flex items-center gap-2 transition-colors group"
                                     >
                                         <ChevronRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                                         {link.name}
@@ -127,7 +129,7 @@ const Footer = () => {
                         <h3 className="text-lg font-bold">Get In Touch</h3>
                         <div className="space-y-4">
                             <div className="flex gap-3 items-start">
-                                <div className="p-2 rounded-lg bg-green-500/10 text-green-500 mt-1">
+                                <div className="p-2 rounded-lg bg-[#80a22c]/10 text-[#80a22c] mt-1">
                                     <MapPin className="w-4 h-4" />
                                 </div>
                                 <p className="text-gray-400 text-sm leading-relaxed">
@@ -138,13 +140,13 @@ const Footer = () => {
                                 </p>
                             </div>
                             <div className="flex gap-3 items-center">
-                                <div className="p-2 rounded-lg bg-green-500/10 text-green-500">
+                                <div className="p-2 rounded-lg bg-[#80a22c]/10 text-[#80a22c]">
                                     <Phone className="w-4 h-4" />
                                 </div>
                                 <p className="text-gray-400 text-sm">+91 98400 67788</p>
                             </div>
                             <div className="flex gap-3 items-center">
-                                <div className="p-2 rounded-lg bg-green-500/10 text-green-500">
+                                <div className="p-2 rounded-lg bg-[#80a22c]/10 text-[#80a22c]">
                                     <Mail className="w-4 h-4" />
                                 </div>
                                 <p className="text-gray-400 text-sm">acer@tncomputers.in</p>

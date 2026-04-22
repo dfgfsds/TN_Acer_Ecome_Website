@@ -45,9 +45,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const cartId = userData?.cart_id;
     if (id) {
       localStorage.setItem('userId', id.toString());
-      localStorage.setItem('cartId', cartId.toString());
+      if (cartId) localStorage.setItem('cartId', cartId.toString());
 
       setUserId(id.toString());
+
       // Handle structures like { user: {...}, token: "..." } vs direct user object
       setUser(userData?.user || userData);
     }

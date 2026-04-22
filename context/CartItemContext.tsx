@@ -14,7 +14,7 @@ export function CartItemProvider({ children }: { children: ReactNode }) {
         const storedCartId = localStorage.getItem('cartId') || '159';
         setCartId(storedCartId);
         if (!localStorage.getItem('cartId')) {
-            localStorage.getItem('cartId');
+            localStorage.setItem('cartId', '159');
         }
     }, []);
 
@@ -102,6 +102,17 @@ export function CartItemProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const clearCart = async () => {
+        try {
+            await Promise.all(cartItems.map((item: any) => deleteCartitemsApi(`${item.id}/`)));
+            queryClient.invalidateQueries({ queryKey: ["getCartitemsData", cartId] });
+            return true;
+        } catch (err) {
+            console.error('Clear cart error:', err);
+            return false;
+        }
+    };
+
     return (
         <CartItemContext.Provider
             value={{
@@ -112,6 +123,7 @@ export function CartItemProvider({ children }: { children: ReactNode }) {
                 addToCart,
                 removeFromCart,
                 updateQuantity,
+                clearCart,
             }}
         >
             {children}

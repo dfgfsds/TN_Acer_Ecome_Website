@@ -16,7 +16,7 @@ export default function RegisterPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const { setUser } = useUser();
+  const { setUser, login } = useUser();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,13 +42,14 @@ export default function RegisterPage() {
       };
 
       const response = await postCreateUserAPi(payload);
-
       const userId = response.data?.user_id || response.data?.id;
 
       if (userId) {
         login(response.data);
         router.push("/products");
       } else {
+
+
         // If the backend requires a manual login after registration
         router.push("/login?registered=true");
       }

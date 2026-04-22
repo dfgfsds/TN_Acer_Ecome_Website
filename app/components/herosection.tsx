@@ -15,7 +15,7 @@ const HeroSection = () => {
                     <div className="text-center md:text-left order-1 md:order-1">
                         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight">
                             Acer Mall <br className="hidden md:block" />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-purple-600">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-50 to-green-500">
                                 Chennai’s #1 Acer Store
                             </span>
                         </h1>

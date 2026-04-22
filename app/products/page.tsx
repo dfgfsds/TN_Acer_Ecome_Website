@@ -39,14 +39,14 @@ const ProductCard = ({ product }: { product: any }) => {
                 />
 
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                     <button className="p-3 bg-white text-black rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:scale-110">
                         <ShoppingCart className="w-5 h-5" />
                     </button>
                     <button className="p-3 bg-white/10 text-white backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-all transform hover:scale-110 border border-white/20">
                         <Eye className="w-5 h-5" />
                     </button>
-                </div>
+                </div> */}
             </div>
 
             {/* Content */}
@@ -72,7 +72,7 @@ const ProductCard = ({ product }: { product: any }) => {
                         <motion.button
                             whileHover={{ scale: 1.05, backgroundColor: "#80a22c", boxShadow: "0 0 20px rgba(128, 162, 44, 0.4)" }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full sm:w-auto px-4 md:px-6 py-2 bg-[#80a22c] text-black text-[10px] md:text-sm font-black uppercase tracking-widest rounded-lg transition-all"
+                            className="w-full sm:w-auto px-4 md:px-6 py-2 bg-[#80a22c] text-black text-[10px] md:text-[12px] font-balck uppercase tracking-widest rounded-lg transition-all"
                         >
                             View
                         </motion.button>

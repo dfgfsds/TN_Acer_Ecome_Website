@@ -33,7 +33,7 @@ import { baseUrl } from '@/api-endpoints/ApiUrls';
 export default function CartPage() {
   useAuthRedirect({ requireAuth: true, redirectTo: '/login' });
 
-  const { cartItems, isLoading, isUpdating, updateQuantity, removeFromCart, refetchCart } = useCartItem();
+  const { cartItems, isLoading, isUpdating, updateQuantity, removeFromCart, refetchCart, clearCart } = useCartItem();
   const { products } = useProducts();
   const { user } = useUser();
   const { vendorId } = useVendor();
@@ -139,6 +139,7 @@ export default function CartPage() {
 
       if (paymentMethod === "cod") {
         await postCODPaymentApi('', payload);
+        await clearCart();
         refetchCart();
         setShowSuccessModal(true);
         setTimeout(() => {
@@ -156,7 +157,8 @@ export default function CartPage() {
           name: "Acer Mall",
           description: "Hardware Order",
           order_id: payment_order_id,
-          handler: function (response: any) {
+          handler: async function (response: any) {
+            await clearCart();
             refetchCart();
             setShowSuccessModal(true);
             setTimeout(() => {
@@ -405,8 +407,8 @@ export default function CartPage() {
                     </div>
                     <div className="flex justify-between items-center text-sm font-bold  tracking-widest text-white">
                       <span>Delivery Charge</span>
-                      <span className={deliveryCharge === 0 ? "text-[#80a22c]" : ""}>
-                        {deliveryCharge === 0 ? "FREE" : formatPrice(deliveryCharge)}
+                      <span className={deliveryCharge === 0 ? "text-[#fff]" : ""}>
+                        {deliveryCharge === 0 ? "0.00" : formatPrice(deliveryCharge)}
                       </span>
                     </div>
                     <div className="pt-4 border-t border-white/10 flex justify-between items-center text-base font-black  tracking-widest text-white mt-4">
