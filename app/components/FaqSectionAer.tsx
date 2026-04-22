@@ -5,24 +5,29 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const faqs = [
     {
+        question: "Where can I buy Acer laptops in Chennai?",
+        answer:
+            "You can visit Acer Mall in Guduvancherry, a trusted Acer exclusive store offering the latest models at the best prices.",
+    },
+    {
+        question: "Do you offer EMI options?",
+        answer:
+            "Yes, we provide flexible EMI options on all Acer laptops to make your purchase आसान & affordable.",
+    },
+    {
+        question: "Are the products original?",
+        answer:
+            "All products are 100% genuine and come with official Acer warranty.",
+    },
+    {
         question: "Which Acer laptop is best for gaming?",
         answer:
-            "Acer Predator and Nitro series are designed for high-performance gaming with powerful GPUs and cooling systems.",
+            "Acer Predator and Nitro series are best for gaming with high-performance GPUs and advanced cooling systems.",
     },
     {
-        question: "Do Acer laptops support AI features?",
+        question: "Do you provide accessories?",
         answer:
-            "Yes, the latest Acer laptops come with AI-powered processors for enhanced performance, battery optimization, and smart features.",
-    },
-    {
-        question: "What is the warranty on Acer products?",
-        answer:
-            "Most Acer laptops come with a standard 1-year warranty, which can be extended with additional plans.",
-    },
-    {
-        question: "Are Acer laptops good for students?",
-        answer:
-            "Absolutely! Acer offers lightweight, affordable, and powerful laptops perfect for students and daily use.",
+            "Yes, we offer a wide range of Acer accessories, upgrades, and peripherals.",
     },
 ];
 
@@ -46,7 +51,7 @@ export default function FaqSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-3xl md:text-5xl text-white font-bold text-transparent text-center"
+                    className="text-3xl md:text-5xl text-white font-bold text-center"
                 >
                     Frequently Asked Questions
                 </motion.h2>
