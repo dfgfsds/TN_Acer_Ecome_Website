@@ -62,12 +62,12 @@ const Header = () => {
         <>
             <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-black/80 border-b border-[#80a22c]/20">
                 <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-4 md:gap-6">
-                    
+
                     {/* MOBILE MENU TOGGLE & LOGO & DESKTOP NAV */}
                     <div className="flex items-center gap-4 lg:gap-8 min-w-0">
                         {/* Mobile Menu Toggle */}
-                        <button 
-                            onClick={() => setIsMobileMenuOpen(true)} 
+                        <button
+                            onClick={() => setIsMobileMenuOpen(true)}
                             className="lg:hidden text-gray-300 hover:text-[#80a22c] transition-colors shrink-0"
                         >
                             <Menu className="w-6 h-6" />
@@ -80,8 +80,8 @@ const Header = () => {
                         {/* DESKTOP NAV MENU */}
                         <nav className="hidden lg:flex items-center gap-6">
                             {navLinks.map((link) => (
-                                <Link 
-                                    key={link.label} 
+                                <Link
+                                    key={link.label}
                                     href={link.href}
                                     className="text-gray-300 hover:text-[#80a22c] text-sm font-bold uppercase tracking-widest transition-colors relative group py-1 whitespace-nowrap"
                                 >
@@ -247,17 +247,17 @@ const Header = () => {
             {isMobileMenuOpen && (
                 <div className="fixed inset-0 z-[100] lg:hidden">
                     {/* BACKDROP */}
-                    <div 
+                    <div
                         className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
                         onClick={() => setIsMobileMenuOpen(false)}
                     />
-                    
+
                     {/* SIDEBAR */}
                     <div className="absolute top-0 left-0 bottom-0 w-[280px] bg-[#0a0c10] border-r border-[#80a22c]/20 shadow-[0_0_40px_rgba(128,162,44,0.15)] animate-in slide-in-from-left duration-300 flex flex-col">
                         <div className="p-5 flex items-center justify-between border-b border-white/10">
                             <Image src="/logo.png" alt="Acer" width={100} height={32} className="w-24 h-auto" />
-                            <button 
-                                onClick={() => setIsMobileMenuOpen(false)} 
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
                                 className="text-gray-400 hover:text-[#80a22c] bg-white/5 hover:bg-[#80a22c]/10 p-2 rounded-full transition-all"
                             >
                                 <X className="w-5 h-5" />
@@ -265,7 +265,7 @@ const Header = () => {
                         </div>
 
                         <div className="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-3">
-                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-2 mb-2">Navigation</p>
+                            {/* <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest pl-2 mb-2">Navigation</p> */}
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.label}
@@ -282,7 +282,7 @@ const Header = () => {
                         {/* BOTTOM ACTIONS */}
                         <div className="p-5 border-t border-white/10 flex flex-col gap-4">
                             {isAuthenticated && (
-                                <button 
+                                <button
                                     onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }}
                                     className="flex items-center justify-center gap-2 w-full py-3 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 hover:border-red-500/50 rounded-xl font-bold uppercase tracking-wider transition-all text-sm"
                                 >

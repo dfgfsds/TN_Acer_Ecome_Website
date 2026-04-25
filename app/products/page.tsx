@@ -72,7 +72,7 @@ const ProductCard = ({ product }: { product: any }) => {
                         <motion.button
                             whileHover={{ scale: 1.05, backgroundColor: "#80a22c", boxShadow: "0 0 20px rgba(128, 162, 44, 0.4)" }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full sm:w-auto px-4 md:px-6 py-2 bg-[#80a22c] text-black text-[10px] md:text-[12px] font-balck uppercase tracking-widest rounded-lg transition-all"
+                            className="w-full sm:w-auto px-4 md:px-6 py-2 bg-[#80a22c] text-black text-[10px] md:text-[12px] font-black uppercase tracking-widest rounded-lg transition-all"
                         >
                             View
                         </motion.button>

@@ -177,7 +177,7 @@ export default function RegisterPage() {
                 disabled={isLoading}
                 className="w-full py-4 mt-6 bg-[#80a22c] text-black font-black uppercase text-sm tracking-[0.2em] rounded-xl shadow-xl shadow-[#80a22c20] hover:bg-[#90b23c] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group/btn"
               >
-                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Establish Connection'}
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Create Account'}
               </button>
             </form>
 
