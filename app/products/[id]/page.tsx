@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, use } from 'react';
+import React, { use, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProductWithVariantSizeApi } from '@/api-endpoints/products';
 import { motion, AnimatePresence } from 'framer-motion';
