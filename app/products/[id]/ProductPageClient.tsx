@@ -17,16 +17,18 @@ import Link from 'next/link';
 import { useCartItem } from '@/context/CartItemContext';
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
+import { useProducts } from '@/context/ProductsContext';
 
 export default function ProductPageClient({ id }: { id: string }) {
     const productId = id;
-
+// console.log(productId)
     const [activeImage, setActiveImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const { cartItems, addToCart, updateQuantity, removeFromCart, isUpdating } = useCartItem();
-    const { isAuthenticated } = useUser();
+    // const { isAuthenticated } = useUser();
     const router = useRouter();
+    const { products, isAuthenticated ,isLoading}: any = useProducts();
 
     //   const { data: product, isLoading, error } = useQuery({
     //     queryKey: ['getProductDetail', productId],
@@ -37,12 +39,20 @@ export default function ProductPageClient({ id }: { id: string }) {
     //     enabled: !!productId,
     //   });
     // ProductPageClient.tsx
-    const { data: product, isLoading, error } = useQuery({
-        queryKey: ['getProductDetail', productId], // Use the passed id directly
-        queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
-        enabled: !!productId, // ID iruntha mattum fetch panna sollu
-    });
-    console.log(product)
+    // const { data: product, isLoading, error } = useQuery({
+    //     queryKey: ['getProductDetail', productId], // Use the passed id directly
+    //     queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
+    //     enabled: !!productId, // ID iruntha mattum fetch panna sollu
+    // });
+const product = React.useMemo(() => {
+    if (!products || !productId) return null;
+
+    return products.find(
+        (item: any) => String(item.id) === String(productId)
+    );
+}, [products, productId]);
+
+// console.log(product, "FOUND PRODUCT");
     // Sync state if product is already in cart
     React.useEffect(() => {
         if (product && cartItems) {
@@ -82,7 +92,7 @@ export default function ProductPageClient({ id }: { id: string }) {
         );
     }
 
-    if (error || !product) {
+    if (!product) {
         return (
             <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 text-center">
                 <div className="p-6 bg-red-500/10 rounded-full mb-6">
