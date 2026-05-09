@@ -290,12 +290,16 @@ import ProductPageClient from "./ProductPageClient";
 type ProductPageProps = {
   params: Promise<{ id: string }>; // Change to Promise
 };
+export const dynamic = 'force-dynamic';
+
+
 
 export default async function Page({ params }: ProductPageProps) {
-  const resolvedParams = await params; // Await the params
-  const id = resolvedParams.id;
+  // const resolvedParams = await params; // Await the params
+  // const id = resolvedParams.id;
 
+  // return <ProductPageClient id={id} />;
+  const { id } = await params; // Inga await compulsory machan
   return <ProductPageClient id={id} />;
 }
 
-export const dynamic = 'force-dynamic';
