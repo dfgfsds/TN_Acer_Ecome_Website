@@ -27,9 +27,9 @@ export default function ProductPageClient({ id }: { id: string }) {
     const [quantity, setQuantity] = useState(1);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const { cartItems, addToCart, updateQuantity, removeFromCart, isUpdating } = useCartItem();
-    // const { isAuthenticated } = useUser();
+    const { isAuthenticated } = useUser();
     const router = useRouter();
-    const { products, isAuthenticated, isLoading }: any = useProducts();
+    // const { products, isAuthenticated, isLoading }: any = useProducts();
 
     //   const { data: product, isLoading, error } = useQuery({
     //     queryKey: ['getProductDetail', productId],
@@ -45,13 +45,25 @@ export default function ProductPageClient({ id }: { id: string }) {
     //     queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
     //     enabled: !!productId, // ID iruntha mattum fetch panna sollu
     // });
-    const product = React.useMemo(() => {
-        if (!Array.isArray(products)) return null;
+    // const product = React.useMemo(() => {
+    //     if (!Array.isArray(products)) return null;
 
-        return products.find(
-            (item: any) => String(item.id) === String(productId)
-        );
-    }, [products, productId]);
+    //     return products.find(
+    //         (item: any) => String(item.id) === String(productId)
+    //     );
+    // }, [products, productId]);
+    const {
+    data: product,
+    isLoading,
+    error,
+} = useQuery({
+    queryKey: ["product", productId],
+    queryFn: async () => {
+        const response = await getProductWithVariantSizeApi(productId);
+        return response.data;
+    },
+    enabled: !!productId,
+});
 
     React.useEffect(() => {
         if (product) {

@@ -284,12 +284,11 @@
 import ProductPageClient from "./ProductPageClient";
 
 
+export const dynamic = "force-dynamic";
 
 type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
-export const dynamic = 'force-dynamic';
-
 
 
 export default async function Page({ params }: ProductPageProps) {
