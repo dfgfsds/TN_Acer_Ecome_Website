@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getProductWithVariantSizeApi } from '@/api-endpoints/products';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -42,7 +42,7 @@ export default function ProductPageClient({ id }: { id: string }) {
         queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
         enabled: !!productId, // ID iruntha mattum fetch panna sollu
     });
-console.log(product)
+    console.log(product)
     // Sync state if product is already in cart
     React.useEffect(() => {
         if (product && cartItems) {
