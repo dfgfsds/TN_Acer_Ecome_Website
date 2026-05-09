@@ -52,6 +52,7 @@ const product = React.useMemo(() => {
     );
 }, [products, productId]);
 
+console.log(product, "FOUND PRODUCT");
 // console.log(product, "FOUND PRODUCT");
     // Sync state if product is already in cart
     React.useEffect(() => {
