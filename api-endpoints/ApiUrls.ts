@@ -4,7 +4,6 @@ export const baseUrl = 'https://ecomapi.ftdigitalsolutions.org';
 // export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ecomapi.ftdigitalsolutions.org';
 // export const baseUrlTest = process.env.NEXT_PUBLIC_API_BASE_URL_TEST || 'https://test-ecomapi.justvy.in';
 
-const singleProductApis = `https://test-ecomapi.justvy.in`;
 
 
 const cartCreate = `${baseUrl}/api/carts/`;
@@ -14,7 +13,7 @@ const cartItem = `${baseUrl}/api/cart_items/`;
 const cartItems = `${baseUrl}/api/cart_items/carts`;
 const cartItemsUpdate = `${baseUrl}/cart-item/update/`;
 const product = `${baseUrl}/api/products/`;
-const categories = `${baseUrl}/api/categori                                                                                                                                                                                                                                                                                                                es/`;
+const categories = `${baseUrl}/api/categories/`;
 const signIn = `${baseUrl}/user_login/`;
 const userCreate = `${baseUrl}/create_users/`;
 const orderItem = `${baseUrl}/order-and-order-items/`;
@@ -26,7 +25,7 @@ const sizes = `${baseUrl}/sizes`;
 const productVariantCart = `${baseUrl}/product-variant-cart-item/update/`;
 const paymentApi = `${baseUrl}/prepaid-pay-now`;
 const updateSelectedAddress = `${baseUrl}/update-selected-address`;
-const fetchProductWithVariantSize = `${singleProductApis}/fetch-product-with-variant-size/`;
+const fetchProductWithVariantSize = `${baseUrl}/fetch-product-with-variant-size/`;
 const AllProductWithVariantSize = `${baseUrl}/fetch-all-product-with-variant-size/`;
 const checkEmail = `${baseUrl}/user/get-by-email-or-contact-and-vendor/`;
 const sendOtp = `${baseUrl}/send-email-opt-user/`;
