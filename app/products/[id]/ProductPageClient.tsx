@@ -10,7 +10,8 @@ import {
     ShieldCheck,
     Loader2,
     Plus,
-    Minus
+    Minus,
+    Loader
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,14 +22,14 @@ import { useProducts } from '@/context/ProductsContext';
 
 export default function ProductPageClient({ id }: { id: string }) {
     const productId = id;
-// console.log(productId)
+    // console.log(productId)
     const [activeImage, setActiveImage] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const { cartItems, addToCart, updateQuantity, removeFromCart, isUpdating } = useCartItem();
     // const { isAuthenticated } = useUser();
     const router = useRouter();
-    const { products, isAuthenticated ,isLoading}: any = useProducts();
+    const { products, isAuthenticated, isLoading }: any = useProducts();
 
     //   const { data: product, isLoading, error } = useQuery({
     //     queryKey: ['getProductDetail', productId],
@@ -44,17 +45,19 @@ export default function ProductPageClient({ id }: { id: string }) {
     //     queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
     //     enabled: !!productId, // ID iruntha mattum fetch panna sollu
     // });
-const product = React.useMemo(() => {
-    if (!products || !productId) return null;
+    const product = React.useMemo(() => {
+        if (!Array.isArray(products)) return null;
 
-    return products.find(
-        (item: any) => String(item.id) === String(productId)
-    );
-}, [products, productId]);
+        return products.find(
+            (item: any) => String(item.id) === String(productId)
+        );
+    }, [products, productId]);
 
-console.log(product, "FOUND PRODUCT");
-// console.log(product, "FOUND PRODUCT");
-    // Sync state if product is already in cart
+    React.useEffect(() => {
+        if (product) {
+            console.log(product, "FOUND PRODUCT");
+        }
+    }, [product]);
     React.useEffect(() => {
         if (product && cartItems) {
             const existing = cartItems.find((i: any) => i.product === product.id);
@@ -82,7 +85,25 @@ console.log(product, "FOUND PRODUCT");
         }
     };
 
-    if (isLoading) {
+    const name = product?.name || 'Acer Product';
+    const rawPrice = product?.price || '0';
+    const images =
+        product?.image_urls && product?.image_urls.length > 0 ? product?.image_urls : ['/acer.png'];
+    const description =
+        product?.description || 'High-performance Acer device designed for modern computing needs.';
+    const brand = product?.brand_name || 'ACER';
+
+    const formattedPrice = !isNaN(parseFloat(rawPrice))
+        ? new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 0,
+        }).format(parseFloat(rawPrice))
+        : rawPrice;
+
+
+
+    if (isLoading || !product) {
         return (
             <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4">
                 <Loader2 className="w-12 h-12 text-[#80a22c] animate-spin" />
@@ -110,21 +131,6 @@ console.log(product, "FOUND PRODUCT");
         );
     }
 
-    const name = product.name || 'Acer Product';
-    const rawPrice = product.price || '0';
-    const images =
-        product.image_urls && product.image_urls.length > 0 ? product.image_urls : ['/acer.png'];
-    const description =
-        product.description || 'High-performance Acer device designed for modern computing needs.';
-    const brand = product.brand_name || 'ACER';
-
-    const formattedPrice = !isNaN(parseFloat(rawPrice))
-        ? new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            maximumFractionDigits: 0,
-        }).format(parseFloat(rawPrice))
-        : rawPrice;
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 md:mt-5 pb-20 px-6">
