@@ -42,7 +42,7 @@ export default function ProductPageClient({ id }: { id: string }) {
         queryFn: () => getProductWithVariantSizeApi(productId).then(res => res.data),
         enabled: !!productId, // ID iruntha mattum fetch panna sollu
     });
-
+console.log(product)
     // Sync state if product is already in cart
     React.useEffect(() => {
         if (product && cartItems) {
