@@ -86,7 +86,7 @@ const ProductCard = ({ product }: { product: any }) => {
 export default function ProductsPage() {
     const { products, isLoading } = useProducts();
     const [searchQuery, setSearchQuery] = useState('');
-
+console.log("Products in context:", products);
     const filteredProducts = products?.filter((p: any) =>
         (p.product_name || p.name || "").toLowerCase().includes(searchQuery.toLowerCase())
     ) || [];
