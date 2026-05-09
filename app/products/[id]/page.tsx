@@ -18,6 +18,9 @@ import { useCartItem } from '@/context/CartItemContext';
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const productId = resolvedParams.id;
