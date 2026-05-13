@@ -35,7 +35,7 @@ export default function LoginPage() {
       const userId = response.data?.user_id || response.data?.id;
 
       if (userId) {
-        login(response.data);
+       const updatedApi = login(response.data);
         router.push("/products");
       } else {
         setError("Invalid credentials. Please verify your email and password.");
