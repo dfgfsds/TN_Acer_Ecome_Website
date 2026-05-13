@@ -2,20 +2,23 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getCartitemsApi, postCartitemApi, deleteCartitemsApi, putCartitemApi } from "../api-endpoints/CartsApi";
+import { useVendor } from "./VendorContext";
 
 const CartItemContext = createContext<any | undefined>(undefined);
 
 export function CartItemProvider({ children }: { children: ReactNode }) {
     const [cartId, setCartId] = useState<string | null>(null);
     const queryClient = useQueryClient();
+    const [userId, setUserId] = useState<string | null>(null);
+    const { vendorId } = useVendor();
 
     useEffect(() => {
         // Initializing cartId from localStorage or default to vendor 159
-        const storedCartId = localStorage.getItem('cartId') || '159';
+        const storedCartId = localStorage.getItem('cartId');
+        const storedUserId = localStorage.getItem('userId');
+
         setCartId(storedCartId);
-        if (!localStorage.getItem('cartId')) {
-            localStorage.setItem('cartId', '159');
-        }
+        setUserId(storedUserId);
     }, []);
 
     // Get Cart Items Query
@@ -60,8 +63,8 @@ export function CartItemProvider({ children }: { children: ReactNode }) {
                 product: productId,
                 cart: Number(cartId),
                 quantity,
-                vendor: 159,
-                user: 334,
+                vendor: vendorId,
+                user: userId,
                 created_by: 'Guest'
             });
             return true;
@@ -91,8 +94,8 @@ export function CartItemProvider({ children }: { children: ReactNode }) {
                 product: productId,
                 cart: Number(cartId),
                 quantity,
-                vendor: 159,
-                user: 334,
+               vendor: vendorId,
+                user: userId,
                 updated_by: 'Guest'
             });
             return true;

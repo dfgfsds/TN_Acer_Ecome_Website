@@ -51,6 +51,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
       // Handle structures like { user: {...}, token: "..." } vs direct user object
       setUser(userData?.user || userData);
+
+   window.location.href = "/products";
     }
   };
 
