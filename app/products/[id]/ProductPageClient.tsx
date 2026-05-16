@@ -53,17 +53,17 @@ export default function ProductPageClient({ id }: { id: string }) {
     //     );
     // }, [products, productId]);
     const {
-    data: product,
-    isLoading,
-    error,
-} = useQuery({
-    queryKey: ["product", productId],
-    queryFn: async () => {
-        const response = await getProductWithVariantSizeApi(productId);
-        return response.data;
-    },
-    enabled: !!productId,
-});
+        data: product,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["product", productId],
+        queryFn: async () => {
+            const response = await getProductWithVariantSizeApi(productId);
+            return response.data;
+        },
+        enabled: !!productId,
+    });
 
     React.useEffect(() => {
         if (product) {
@@ -306,7 +306,11 @@ export default function ProductPageClient({ id }: { id: string }) {
                             <h3 className="text-xl font-black uppercase italic tracking-widest text-[#80a22c]">
                                 The Hardware Depth
                             </h3>
-                            <p className="text-gray-400 leading-relaxed text-sm">{description}</p>
+                            {/* <p className="text-gray-400 leading-relaxed text-sm">{description}</p> */}
+                            <div
+                                className="category-rich-content"
+                                dangerouslySetInnerHTML={{ __html: description }}
+                            />
                         </div>
                     </div>
                 </div>
