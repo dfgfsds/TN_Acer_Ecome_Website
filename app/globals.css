@@ -15,3 +15,81 @@
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+@plugin "@tailwindcss/typography";
+
+@layer components {
+  .category-rich-content {
+    /* Full content bright ah theriyanum */
+    @apply prose prose-invert max-w-none text-white;
+
+    /* Normal Text */
+    p {
+      @apply text-white leading-8 mb-6 text-base md:text-lg font-medium;
+    }
+
+    /* Main Heading */
+    h1,
+    h2 {
+      @apply text-white text-3xl md:text-4xl font-black uppercase tracking-wider mb-6 mt-10 border-l-4 border-lime-400 pl-4;
+    }
+
+    /* Sub Heading */
+    h3,
+    h4 {
+      @apply text-lime-400 text-2xl font-extrabold mt-8 mb-4;
+    }
+
+    /* List */
+    ul {
+      @apply list-none pl-0 space-y-4 my-6;
+    }
+
+    li {
+      @apply bg-[#111111] border border-lime-400/20 rounded-xl px-5 py-4 text-white font-medium;
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    li::before {
+      content: "✔";
+      @apply absolute left-4 text-lime-400 font-black;
+    }
+
+    /* Strong Text */
+    strong {
+      @apply text-white font-black;
+    }
+
+    /* Links */
+    a {
+      @apply text-lime-400 font-bold underline underline-offset-4;
+    }
+
+    /* Table if exists */
+    table {
+      @apply w-full border-collapse my-6;
+    }
+
+    th {
+      @apply bg-lime-400 text-black p-3 text-left;
+    }
+
+    td {
+      @apply border border-white/10 p-3 text-white;
+    }
+
+    /* FAQ Section */
+    .faq-box {
+      @apply bg-[#0d0d0d] border border-lime-400/20 rounded-3xl p-8 mt-10;
+    }
+
+    .faq-box strong {
+      @apply text-lime-400 text-xl block mb-3;
+    }
+
+    .faq-box p {
+      @apply text-white;
+    }
+  }
+}
